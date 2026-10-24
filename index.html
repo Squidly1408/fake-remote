@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#11141b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Fidget Remote</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ START ============ -->
+<section id="start" class="screen active" aria-label="Choose a mode">
+  <div class="start-inner">
+    <div class="start-logo" aria-hidden="true">📺</div>
+    <h1>Fidget Remote</h1>
+    <p class="start-sub">A pretend TV remote. It controls nothing, so press whatever you like.</p>
+    <button class="mode-btn mode-adult" data-mode="adult">
+      <span class="mode-ico" aria-hidden="true">🎛️</span>
+      <span><b>Grown-up remote</b><small>Realistic, clicky, satisfying</small></span>
+    </button>
+    <button class="mode-btn mode-kids" data-mode="kids">
+      <span class="mode-ico" aria-hidden="true">🐻</span>
+      <span><b>Kids remote</b><small>Big buttons, animals and colours</small></span>
+    </button>
+    <button class="chip sound-toggle start-sound" aria-pressed="true"><span class="ico">🔊</span> <span class="lbl">Sound on</span></button>
+  </div>
+</section>
+
+<!-- ============ ADULT ============ -->
+<section id="adult" class="screen" aria-label="Grown-up remote">
+  <header class="topbar">
+    <button class="chip" id="adultBack">‹ Modes</button>
+    <button class="chip" id="tvToggle">Hide TV</button>
+    <button class="chip sound-toggle" aria-pressed="true" aria-label="Toggle sound"><span class="ico">🔊</span></button>
+  </header>
+
+  <div class="tv" id="tv">
+    <div class="tv-screen off init" id="tvScreen">
+      <div class="tv-inner">
+        <div class="tv-content" id="tvContent"></div>
+        <canvas id="tvNoise" width="128" height="72"></canvas>
+        <div class="osd osd-nosig" id="osdNoSig">NO SIGNAL</div>
+        <div class="tv-menu" id="tvMenu"></div>
+        <div class="osd osd-ch" id="osdCh">1</div>
+        <div class="osd osd-mute" id="osdMute">MUTE</div>
+        <div class="osd osd-vol" id="osdVol"><span>VOL</span><div class="vbar"><i id="volFill"></i></div><b id="volNum">18</b></div>
+        <div class="osd osd-banner" id="osdBanner"></div>
+        <div class="osd osd-icon" id="osdIcon"></div>
+        <div class="osd osd-toast" id="osdToast"></div>
+        <div class="tv-flash" id="tvFlash"></div>
+      </div>
+      <div class="tv-glass"></div>
+    </div>
+    <div class="tv-chin"><span class="tv-brand">FIDGETRON</span><span class="tv-led" id="tvLed"></span></div>
+  </div>
+
+  <div class="remote" id="remote">
+    <div class="r-head"><span class="led" id="led"></span></div>
+
+    <div class="r-row r-top">
+      <button class="rb power" data-k="power" data-p="0.7" aria-label="Power">⏻</button>
+      <button class="rb" data-k="input">INPUT</button>
+      <button class="rb" data-k="mute">MUTE</button>
+    </div>
+
+    <div class="r-nums">
+      <button class="rb num" data-k="1">1</button><button class="rb num" data-k="2">2</button><button class="rb num" data-k="3">3</button>
+      <button class="rb num" data-k="4">4</button><button class="rb num" data-k="5">5</button><button class="rb num" data-k="6">6</button>
+      <button class="rb num" data-k="7">7</button><button class="rb num" data-k="8">8</button><button class="rb num" data-k="9">9</button>
+      <button class="rb small" data-k="list">LIST</button><button class="rb num" data-k="0">0</button><button class="rb small" data-k="prev">PREV</button>
+    </div>
+
+    <div class="r-rockers">
+      <div class="rocker">
+        <button class="rk up" data-k="volup" data-repeat data-p="0.85" aria-label="Volume up">+</button>
+        <span class="rk-lbl">VOL</span>
+        <button class="rk down" data-k="voldown" data-repeat data-p="0.85" aria-label="Volume down">−</button>
+      </div>
+      <div class="r-mid">
+        <button class="rb round" data-k="home" aria-label="Home">⌂</button>
+        <button class="rb round" data-k="info" aria-label="Info">i</button>
+      </div>
+      <div class="rocker">
+        <button class="rk up" data-k="chup" data-repeat data-p="0.85" aria-label="Channel up">⌃</button>
+        <span class="rk-lbl">CH</span>
+        <button class="rk down" data-k="chdown" data-repeat data-p="0.85" aria-label="Channel down">⌄</button>
+      </div>
+    </div>
+
+    <div class="r-nav">
+      <button class="rb mini a1" data-k="back">↩ BACK</button>
+      <button class="rb mini a2" data-k="menu">MENU</button>
+      <div class="dpad" id="dpad">
+        <button class="dp dp-up" data-k="up" data-repeat data-p="0.95" aria-label="Up">▲</button>
+        <button class="dp dp-left" data-k="left" data-repeat data-p="0.95" aria-label="Left">◀</button>
+        <button class="dp dp-right" data-k="right" data-repeat data-p="0.95" aria-label="Right">▶</button>
+        <button class="dp dp-down" data-k="down" data-repeat data-p="0.95" aria-label="Down">▼</button>
+        <button class="dp-ok" data-k="ok" data-p="0.8">OK</button>
+      </div>
+      <button class="rb mini a3" data-k="exit">EXIT</button>
+      <button class="rb mini a4" data-k="guide">GUIDE</button>
+    </div>
+
+    <div class="r-row r-media">
+      <button class="rb small" data-k="rew" aria-label="Rewind">◀◀</button>
+      <button class="rb small" data-k="play" aria-label="Play or pause">▶❚❚</button>
+      <button class="rb small" data-k="ff" aria-label="Fast forward">▶▶</button>
+      <button class="rb small" data-k="stop" aria-label="Stop">■</button>
+    </div>
+
+    <div class="r-row r-colors">
+      <button class="rb col red" data-k="red" data-p="1.1" aria-label="Red"></button>
+      <button class="rb col green" data-k="green" data-p="1.1" aria-label="Green"></button>
+      <button class="rb col yellow" data-k="yellow" data-p="1.1" aria-label="Yellow"></button>
+      <button class="rb col blue" data-k="blue" data-p="1.1" aria-label="Blue"></button>
+    </div>
+
+    <div class="r-foot">FIDGETRON</div>
+  </div>
+</section>
+
+<!-- ============ KIDS ============ -->
+<section id="kids" class="screen" aria-label="Kids remote">
+  <header class="k-top">
+    <button class="k-round sound-toggle" aria-pressed="true" aria-label="Toggle sound"><span class="ico">🔊</span></button>
+    <div class="k-hint" id="kHint">Grown-ups: hold 🔒 for 3 seconds</div>
+    <button class="k-round k-lock" id="kLock" aria-label="Parent lock. Hold for 3 seconds to exit">
+      <svg viewBox="0 0 60 60" aria-hidden="true"><circle class="ring-bg" cx="30" cy="30" r="26"/><circle class="ring" id="kRing" cx="30" cy="30" r="26"/></svg>
+      <span class="ico">🔒</span>
+    </button>
+  </header>
+
+  <div class="ktv" id="ktv">
+    <div class="ant ant-l"></div><div class="ant ant-r"></div>
+    <div class="ktv-body">
+      <div class="ktv-screen"><div class="k-show" id="kShow"></div></div>
+      <div class="ktv-side"><i class="knob"></i><i class="knob"></i><i class="spk"></i></div>
+    </div>
+    <div class="ktv-feet"><i></i><i></i></div>
+  </div>
+
+  <div class="kgrid" id="kGrid"></div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
